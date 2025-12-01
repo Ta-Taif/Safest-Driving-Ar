@@ -1,46 +1,65 @@
 #include <iostream>
-#include <string>
 using namespace std;
 
-void getRegInfo(string& regionName, int& accidents) {
-    cout << "Enter region name: ";
-    cin >> regionName;
+// this function gives judge score and we loop if it a negtive
+double getScore() {
+    double score;
+    cout << "Enter judge's score (0-10): ";
+    cin >> score;
 
-    cout << "Enter number of accidents in " << regionName << ": ";
-    cin >> accidents;
-
-    while (accidents < 0) {
-        cout << "NO NEGETIVES: ";
-        cin >> accidents;
+    while (score < 0 || score > 10) {
+        cout << "NO Negetive: ";
+        cin >> score;
     }
+    return score;
+}
+
+// this function determ
+bool Lower(double test, double currentMin) {
+    return test <= currentMin;
 }
 
 
+bool Higher(double test, double currentMax) {
+    return test >= currentMax;
+}
 
-void showLowest(string regionName, int accidents) {
-    cout << "\nThe safest driving region is " << regionName
-        << " with " << accidents << " accidents last year." << endl;
+
+double calcAverage(double total, int numScores, double minScore, double maxScore) {
+    return (total - minScore - maxScore) / (numScores - 2);
 }
 
 
 int main() {
-    string regionName, lowestRegion;
-    int accidents, lowestAccidents;
+    double score, minScore, maxScore, total;
+    int judges = 5; // number of judges
 
-    getRegInfo(regionName, accidents);
-    lowestRegion = regionName;
-    lowestAccidents = accidents;
+    // we diplay everything
+    score = getScore();
+    minScore = score;
+    maxScore = score;
+    total = score;
 
-    for (int i = 0; i < 4; i++) {
-        getRegInfo(regionName, accidents);
+    // Remaining judges
+    for (int i = 1; i < judges; i++) {
+        score = getScore();
+        total += score;
 
-        if (accidents < lowestAccidents) {
-            lowestAccidents = accidents;   
-            lowestRegion = regionName;     
+        // if score is using bollean we get smallest num
+        if (Lower(score, minScore)) {
+            minScore = score;
+        }
+        // if score is using bollean we get smallest num
+        if (Higher(score, maxScore)) {
+            maxScore = score;
         }
     }
 
-    showLowest(lowestRegion, lowestAccidents);
+    // Calculate average using google formula
+    double average = calcAverage(total, judges, minScore, maxScore);
+
+    // Display result
+    cout << "\nFinal performer score: " << average << endl;
 
     return 0;
 }
