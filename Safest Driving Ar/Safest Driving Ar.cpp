@@ -1,65 +1,30 @@
 #include <iostream>
+#include <iomanip>
 using namespace std;
+// the numbers
 
-// this function gives judge score and we loop if it a negtive
-double getScore() {
-    double score;
-    cout << "Enter judge's score (0-10): ";
-    cin >> score;
+const int MIN_FAHRENHEIT = 0;
+const int MAX_FAHRENHEIT = 20;
 
-    while (score < 0 || score > 10) {
-        cout << "NO Negetive: ";
-        cin >> score;
-    }
-    return score;
-}
-
-// this function determ
-bool Lower(double test, double currentMin) {
-    return test <= currentMin;
-}
-
-
-bool Higher(double test, double currentMax) {
-    return test >= currentMax;
-}
-
-
-double calcAverage(double total, int numScores, double minScore, double maxScore) {
-    return (total - minScore - maxScore) / (numScores - 2);
+//math to get Celsius
+double getCelsius(double fahrenheit) {
+    return (5.0 / 9.0) * (fahrenheit - 32);
 }
 
 
 int main() {
-    double score, minScore, maxScore, total;
-    int judges = 5; // number of judges
+    // Print  title
+    cout << "fahreheit to celsius convrsion Table" << endl;
+    cout << "--------------------------------------" << endl;
 
-    // we diplay everything
-    score = getScore();
-    minScore = score;
-    maxScore = score;
-    total = score;
+    // Print column labels
+    cout << setw(12) << "Fahrenheit" << setw(12) << "Celsius" << endl;
 
-    // Remaining judges
-    for (int i = 1; i < judges; i++) {
-        score = getScore();
-        total += score;
-
-        // if score is using bollean we get smallest num
-        if (Lower(score, minScore)) {
-            minScore = score;
-        }
-        // if score is using bollean we get smallest num
-        if (Higher(score, maxScore)) {
-            maxScore = score;
-        }
+    // Loop through Fahrenheit values
+    for (int f = MIN_FAHRENHEIT; f <= MAX_FAHRENHEIT; f++) {
+        double c = getCelsius(f);
+        cout << setw(12) << f << setw(12) << fixed << setprecision(1) << c << endl;
     }
-
-    // Calculate average using google formula
-    double average = calcAverage(total, judges, minScore, maxScore);
-
-    // Display result
-    cout << "\nFinal performer score: " << average << endl;
 
     return 0;
 }
