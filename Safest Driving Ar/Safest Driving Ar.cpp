@@ -3,12 +3,13 @@
 using namespace std;
 // the numbers
 
-const int MIN_FAHRENHEIT = 0;
-const int MAX_FAHRENHEIT = 20;
+const int MINFA = 0;
+const int MAXFA = 20;
 
 //math to get Celsius
 double getCelsius(double fahrenheit) {
-    return (5.0 / 9.0) * (fahrenheit - 32);
+    int awnser;
+    return awnser = (5.0 / 9.0) * (fahrenheit - 32);
 }
 
 
@@ -21,7 +22,7 @@ int main() {
     cout << setw(12) << "Fahrenheit" << setw(12) << "Celsius" << endl;
 
     // Loop through Fahrenheit values
-    for (int f = MIN_FAHRENHEIT; f <= MAX_FAHRENHEIT; f++) {
+    for (int f = MINFA; f <= MAXFA; f++) {
         double c = getCelsius(f);
         cout << setw(12) << f << setw(12) << fixed << setprecision(1) << c << endl;
     }
